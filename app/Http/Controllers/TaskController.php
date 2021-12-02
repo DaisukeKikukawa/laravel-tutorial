@@ -47,11 +47,11 @@ class TaskController extends Controller
             $tasks
                 ->where(function ($tasks) use ($keyword) {
                     $tasks
-                        ->where('search_task_kinds.name', 'like', '%'.$keyword.'%')
-                        ->orWhere('projects.key', 'like', '%'.$keyword.'%')
-                        ->orWhere('tasks.name', 'like', '%'.$keyword.'%')
-                        ->orWhere('search_assigner.name', 'like', '%'.$keyword.'%')
-                        ->orWhere('search_users.name', 'like', '%'.$keyword.'%');
+                    ->where('search_task_kinds.name', 'like', '%' . $keyword . '%')
+                    ->orWhere('projects.key', 'like', '%' . $keyword . '%')
+                    ->orWhere('tasks.name', 'like', '%' . $keyword . '%')
+                    ->orWhere('search_assigner.name', 'like', '%' . $keyword . '%')
+                    ->orWhere('search_users.name', 'like', '%' . $keyword . '%');
                 });
         }
         if ($request->has('assigner_id') && isset($assigner_id)) {
@@ -107,12 +107,14 @@ class TaskController extends Controller
             'task_category_id' => 'nullable|integer',
             'task_resolution_id' => 'nullable|integer',
             'due_date' => 'nullable|date',
+            'detail' => 'nullable|string|max:1000'
         ]);
 
         if (Task::create([
             'project_id' => $project->id,
             'task_kind_id' => $request->task_kind_id,
             'name' => $request->name,
+            'detail' => $request->detail,
             'task_status_id' => $request->task_status_id,
             'assigner_id' => $request->assigner_id,
             'task_category_id' => $request->task_category_id,
@@ -174,6 +176,7 @@ class TaskController extends Controller
         $request->validate([
             'task_kind_id' => 'required|integer',
             'name' => 'required|string|max:255',
+            'detail' => 'nullable|string|max:1000',
             'task_status_id' => 'required|integer',
             'assigner_id' => 'nullable|integer',
             'task_category_id' => 'nullable|integer',
