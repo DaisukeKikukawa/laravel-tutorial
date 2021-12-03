@@ -71,7 +71,8 @@
     function app() {
         return {
             showDatepicker: false
-            , datepickerValue: '@if (isset($value)){{ $value->format("Y/n/j") }}@endif'
+            , datepickerValue:
+            '@if (isset($value))@endif'
             , month: ''
             , year: ''
             , no_of_days: []
